@@ -2,7 +2,10 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using TCP_Server.SimpleRestService;
 
 namespace TCP_Server
 {
@@ -11,7 +14,7 @@ namespace TCP_Server
         static void Main(string[] args)
         {
             //Opret server
-            IPAddress ip = IPAddress.Parse("192.168.24.241");
+            IPAddress ip = IPAddress.Parse("10.135.32.41");
             //Opret adresse eller port
             TcpListener serverSocket = new TcpListener(ip, 4646);
             //starter server
@@ -40,15 +43,19 @@ namespace TCP_Server
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true;
 
+            Book returnBook = JsonConvert.DeserializeObject<Book>(sr.ReadLine());
+            
             string message = sr.ReadLine();
             string answer = "";
 
             while (message != null && message != "")
             {
-                Console.WriteLine("Get all" + message);
+                Console.WriteLine("Book info" + "" + message);
                 answer = message.ToUpper();
                 sw.WriteLine(answer);
                 message = sr.ReadLine();
+                returnBook= JsonConvert.DeserializeObject<Book>(sr.ReadLine());
+                message = returnBook.ToString();
             }
 
             ns.Close();

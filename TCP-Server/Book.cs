@@ -76,6 +76,13 @@ namespace TCP_Server
                     else if (value.Length != 13) throw new ArgumentException("ISBN skal være 13 cifre");
 
                 }
+
+            }
+
+            public override string ToString()
+            {
+                return "The Book Title" + "" + Title + "" + "Written by" + "" + Author + "" + "The book has" + "" +
+                       PageNo + "" + "pages" + "" + "ISBN no is" + "" + Isbn13;
             }
         }
     }
